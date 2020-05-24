@@ -1,8 +1,8 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { IEdge, IEdgeList, IEqualityComparer, IVertexEdgeDictionary } from "./interface";
-import { TryOutResult } from "./try-result";
+import { IEdge, IEdgeList, IEqualityComparer, IVertexEdgeDictionary } from './interface';
+import { TryOutResult } from './try-result';
 
 
 export class VertexEdgeDictionary<TVertex, TEdge extends IEdge<TVertex>>
@@ -47,6 +47,6 @@ export class VertexEdgeDictionary<TVertex, TEdge extends IEdge<TVertex>>
                 value: this.get(v)!
             }
         }
-        return {success: false};
+        return { success: false};
     }
 }

@@ -2,11 +2,11 @@
  * Created by yish on 2020/05/10.
  */
 
-import {TryOutResult} from "./try-result";
-import {Observable} from "rxjs";
-import {EdgeAction, VertexAction} from "./event";
-import {EdgePredicate} from "./edge-predicate";
-import {VertexPredicate} from "./vertex-predicate";
+import { TryOutResult } from './try-result';
+import { Observable } from 'rxjs';
+import { EdgeAction, VertexAction } from './event';
+import { EdgePredicate } from './edge-predicate';
+import { VertexPredicate } from './vertex-predicate';
 
 /**
  *  A directed edge
@@ -350,7 +350,7 @@ export interface IBidirectionalIncidenceGraph<TVertex, TEdge extends IEdge<TVert
  * to traverse both in and out edges.
  */
 export interface IBidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>>
-    extends IVertexAndEdgeListGraph<TVertex,TEdge>,
+    extends IVertexAndEdgeListGraph<TVertex, TEdge>,
         IBidirectionalIncidenceGraph<TVertex, TEdge>{
 }
 
@@ -380,16 +380,16 @@ export interface IMutableVertexAndEdgeSet<TVertex, TEdge extends IEdge<TVertex>>
  * A mutable vertex and edge list graph
  */
 export interface IMutableVertexAndEdgeListGraph<TVertex, TEdge extends IEdge<TVertex>>  extends
-    IMutableVertexListGraph<TVertex,TEdge>, IMutableEdgeListGraph<TVertex,TEdge>,
-    IMutableVertexAndEdgeSet<TVertex,TEdge>, IVertexAndEdgeListGraph<TVertex,TEdge>{
+    IMutableVertexListGraph<TVertex, TEdge>, IMutableEdgeListGraph<TVertex, TEdge>,
+    IMutableVertexAndEdgeSet<TVertex, TEdge>, IVertexAndEdgeListGraph<TVertex, TEdge>{
 }
 
 /**
  * A mutable bidirectional directed graph
  */
 export interface IMutableBidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>> extends
-    IMutableVertexAndEdgeListGraph<TVertex,TEdge>,
-    IBidirectionalGraph<TVertex,TEdge>{
+    IMutableVertexAndEdgeListGraph<TVertex, TEdge>,
+    IBidirectionalGraph<TVertex, TEdge>{
 
     /**
      * Removes in-edges of `v` that match predicate

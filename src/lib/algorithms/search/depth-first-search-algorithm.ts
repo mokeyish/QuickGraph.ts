@@ -1,20 +1,19 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { RootedAlgorithmBase } from "../rooted-algorithm-base";
-import { IEdge, IVertexListGraph } from "../../interface";
+import { RootedAlgorithmBase } from '../rooted-algorithm-base';
+import { IEdge, IVertexListGraph } from '../../interface';
 import {
     IDistanceRecorderAlgorithm,
     ITreeBuilderAlgorithm,
     IVertexColorizerAlgorithm,
     IVertexPredecessorRecorderAlgorithm,
     IVertexTimeStamperAlgorithm
-} from "../interface";
-import { EdgeAction, VertexAction } from "../../event";
-import { GraphColor } from "../../graph-color";
-import { Subject } from "rxjs";
-import { IAlgorithmComponent } from "../services/interface";
-
+} from '../interface';
+import { EdgeAction, VertexAction } from '../../event';
+import { GraphColor } from '../../graph-color';
+import { Subject } from 'rxjs';
+import { IAlgorithmComponent } from '../services/interface';
 
 export class DepthFirstSearchAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
     extends RootedAlgorithmBase<TVertex, IVertexListGraph<TVertex, TEdge>>
@@ -30,16 +29,19 @@ export class DepthFirstSearchAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
     private readonly _treeEdge: Subject<TEdge> = new Subject<TEdge>();
     private readonly _examineEdge: Subject<TEdge> = new Subject<TEdge>();
     private readonly _colors: Map<TVertex, GraphColor>;
+    private readonly _outEdgeEnumerator: (iter: IterableIterator<TEdge>) => IterableIterator<TEdge>;
     private _maxDepth: number = Number.MAX_VALUE;
-    public readonly outEdgeEnumerator: (iter: IterableIterator<TEdge>) => IterableIterator<TEdge>;
 
     constructor(
-        host: IAlgorithmComponent,
+        host: IAlgorithmComponent | undefined,
         visitedGraph: IVertexListGraph<TVertex, TEdge>,
         colors?: Map<TVertex, GraphColor>, outEdgeEnumerator?: (iter: IterableIterator<TEdge>) => IterableIterator<TEdge>) {
         super(visitedGraph, host);
         this._colors = colors ?? new Map<TVertex, GraphColor>();
-        this.outEdgeEnumerator = outEdgeEnumerator ?? ((e: IterableIterator<TEdge>) => e);
+        this._outEdgeEnumerator = outEdgeEnumerator ?? ((e: IterableIterator<TEdge>) => e);
+    }
+    public get outEdgeEnumerator():  (iter: IterableIterator<TEdge>) => IterableIterator<TEdge> {
+        return this._outEdgeEnumerator;
     }
 
     public get initializeVertex(): VertexAction<TVertex> {
@@ -61,22 +63,22 @@ export class DepthFirstSearchAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
     public get examineEdge(): EdgeAction<TVertex, TEdge> {
         return this._examineEdge.asObservable();
     }
-    public onInitializeVertex(v: TVertex): void {
+    protected onInitializeVertex(v: TVertex): void {
         this._initializeVertex.next(v);
     }
-    public onDiscoverVertex(v: TVertex): void {
+    protected onDiscoverVertex(v: TVertex): void {
         this._discoverVertex.next(v);
     }
-    public onFinishVertex(v: TVertex): void {
+    protected onFinishVertex(v: TVertex): void {
         this._finishVertex.next(v);
     }
-    public onStartVertex(v: TVertex): void {
+    protected onStartVertex(v: TVertex): void {
         this._startVertex.next(v);
     }
-    public onTreeEdge(e: TEdge): void {
+    protected onTreeEdge(e: TEdge): void {
         this._treeEdge.next(e);
     }
-    public onExamineEdge(e: TEdge): void {
+    protected onExamineEdge(e: TEdge): void {
         this._examineEdge.next(e);
     }
 
@@ -84,7 +86,7 @@ export class DepthFirstSearchAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
     public get backEdge(): EdgeAction<TVertex, TEdge> {
         return this._backEdge.asObservable();
     }
-    public onBackEdge(e: TEdge): void {
+    protected onBackEdge(e: TEdge): void {
         return this._backEdge.next(e);
     }
     private readonly _forwardOrCrossEdge: Subject<TEdge> = new Subject<TEdge>();
@@ -92,7 +94,7 @@ export class DepthFirstSearchAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
         return this._forwardOrCrossEdge.asObservable();
     }
 
-    public onForwardOrCrossEdge(e: TEdge): void {
+    protected onForwardOrCrossEdge(e: TEdge): void {
         return this._forwardOrCrossEdge.next(e);
     }
 
@@ -140,14 +142,9 @@ export class DepthFirstSearchAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
     protected initialize() {
         super.initialize();
         this.vertexColors.clear();
-        const iter = this.visitedGraph.vertices;
-        while (true) {
-            const n = iter.next();
-            if (n.done) {
-                break;
-            }
-            this.vertexColors.set(n.value, GraphColor.White);
-            this.onInitializeVertex(n.value);
+        for (const v of this.visitedGraph.vertices) {
+            this.vertexColors.set(v, GraphColor.White);
+            this.onInitializeVertex(v);
         }
     }
 
@@ -159,7 +156,7 @@ export class DepthFirstSearchAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
 
         const cancelManager = this.services.cancelManager;
         const iter = oee(this.visitedGraph.outEdges(root));
-        todo.push({vertex: root, edges: iter, depth: 0});
+        todo.push({ vertex: root, edges: iter, depth: 0});
         while (todo.length > 0) {
             if (cancelManager.isCancelling) return;
 

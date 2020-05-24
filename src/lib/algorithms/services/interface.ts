@@ -1,12 +1,12 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { EventHandler } from "../../event";
-import { InjectionToken } from "../../di/injection-token";
-import { Type } from "../../di/type";
-import { TryOutResult } from "../../try-result";
+import { EventHandler } from '../../event';
+import { InjectionToken } from '../../di/injection-token';
+import { Type } from '../../di/type';
+import { TryOutResult } from '../../try-result';
 
-export interface IService {}
+export interface IService { }
 
 export interface ICancelManager
     extends IService{

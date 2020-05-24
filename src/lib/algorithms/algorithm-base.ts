@@ -1,14 +1,14 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { IAlgorithm } from "./interface";
-import { IAlgorithmComponent, IAlgorithmServices, IService } from "./services/interface";
-import { Observable, Subject } from "rxjs";
-import { Type } from "../di/type";
-import { TryOutResult } from "../try-result";
-import { InjectionToken } from "../di/injection-token";
-import { ComputationState } from "./computation-state";
-import { AlgorithmServices } from "./services/algorithm-services";
+import { IAlgorithm } from './interface';
+import { IAlgorithmComponent, IAlgorithmServices, IService } from './services/interface';
+import { Observable, Subject } from 'rxjs';
+import { Type } from '../di/type';
+import { TryOutResult } from '../try-result';
+import { InjectionToken } from '../di/injection-token';
+import { ComputationState } from './computation-state';
+import { AlgorithmServices } from './services/algorithm-services';
 
 export abstract class AlgorithmBase<TGraph>
     implements IAlgorithm<TGraph>, IAlgorithmComponent {
@@ -79,7 +79,7 @@ export abstract class AlgorithmBase<TGraph>
     getService<T extends IService>(t: Type<T> | InjectionToken<T>): T {
         const result = this.tryGetService(t);
         if (!result.success) {
-            throw new Error("service not found");
+            throw new Error('service not found');
         }
         return result.value;
     }
@@ -87,7 +87,7 @@ export abstract class AlgorithmBase<TGraph>
     private _servicesMap?: Map<Type<any> | InjectionToken<any>, any>;
     tryGetService<T extends IService>(t: Type<T> | InjectionToken<T>): TryOutResult<T> {
         if (!this._servicesMap) {
-            this._servicesMap = new Map<Type<any>|InjectionToken<any>, any>();
+            this._servicesMap = new Map<Type<any> | InjectionToken<any>, any>();
         }
         let service = this._servicesMap.get(t);
 

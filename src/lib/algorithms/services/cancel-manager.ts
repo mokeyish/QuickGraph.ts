@@ -1,10 +1,10 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { ICancelManager } from "./interface";
-import { Observable, Subject } from "rxjs";
-import { EventHandler } from "../../event";
-import { InjectionToken } from "../../di/injection-token";
+import { ICancelManager } from './interface';
+import { Observable, Subject } from 'rxjs';
+import { EventHandler } from '../../event';
+import { InjectionToken } from '../../di/injection-token';
 
 
 export const CANCEL_MANAGER = new InjectionToken<ICancelManager>('CANCEL_MANAGER', () => new CancelManager());

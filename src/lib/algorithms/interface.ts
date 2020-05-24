@@ -1,11 +1,11 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { ComputationState } from "./computation-state";
-import { Observable } from "rxjs";
-import { IEdge } from "../interface";
-import { EdgeAction, VertexAction } from "../event";
-import { GraphColor } from "../graph-color";
+import { ComputationState } from './computation-state';
+import { Observable } from 'rxjs';
+import { IEdge } from '../interface';
+import { EdgeAction, VertexAction } from '../event';
+import { GraphColor } from '../graph-color';
 
 export interface IComputation {
     readonly state: ComputationState;

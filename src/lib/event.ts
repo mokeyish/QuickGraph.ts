@@ -1,8 +1,8 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import {Observable} from "rxjs";
-import {IEdge} from "./interface";
+import { Observable } from 'rxjs';
+import { IEdge } from './interface';
 
 /**
  * The handler for events involving edges

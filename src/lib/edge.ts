@@ -2,7 +2,7 @@
  * Created by yish on 2020/05/10.
  */
 
-import {IEdge} from "./interface";
+import { IEdge } from './interface';
 
 /**
  * The default `IEdge` implementation.

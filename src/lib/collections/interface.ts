@@ -8,3 +8,12 @@
 export interface IComparer<T> {
     compare(x: T, y: T): number;
 }
+
+export interface IQueue<T> {
+    readonly count: number;
+    contains(value: T): boolean;
+    enqueue(value: T): void;
+    dequeue(): T | undefined;
+    peek(): T | undefined;
+    toArray(): T[];
+}

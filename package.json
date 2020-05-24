@@ -10,7 +10,8 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc --build ./tsconfig.prod.json"
+    "build": "tsc --build ./tsconfig.prod.json",
+    "lint": "tslint --project ./tsconfig.json --fix"
   },
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",

@@ -9,16 +9,16 @@ import {
     IMutableIncidenceGraph, IMutableVertexListGraph,
     IVertexAndEdgeListGraph,
     IMutableVertexAndEdgeListGraph, IMutableBidirectionalGraph, IVertexEdgeDictionary, IEqualityComparer
-} from "./interface";
-import { TryOutResult } from "./try-result";
-import { VertexEdgeDictionary } from "./vertex-edge-dictionary";
-import { EqualityComparer } from "./equality-comparer";
-import { EdgeList } from "./edge-list";
-import { EdgeAction, VertexAction } from "./event";
-import { Observable, Subject } from "rxjs";
-import { VertexPredicate } from "./vertex-predicate";
-import { VertexList } from "./vertex-list";
-import { EdgePredicate } from "./edge-predicate";
+} from './interface';
+import { TryOutResult } from './try-result';
+import { VertexEdgeDictionary } from './vertex-edge-dictionary';
+import { EqualityComparer } from './equality-comparer';
+import { EdgeList } from './edge-list';
+import { EdgeAction, VertexAction } from './event';
+import { Observable, Subject } from 'rxjs';
+import { VertexPredicate } from './vertex-predicate';
+import { VertexList } from './vertex-list';
+import { EdgePredicate } from './edge-predicate';
 
 /**
  *  A mutable directed graph data structure efficient for sparse
@@ -43,8 +43,7 @@ export class BidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>>
     private _edgeCapacity: number = -1;
 
     constructor(
-        allowParallelEdges: boolean = true, vertexCapacity: number = -1, edgeCapacity: number = -1,
-        vertexComparer?: IEqualityComparer<TVertex>) {
+        allowParallelEdges: boolean = true, vertexComparer?: IEqualityComparer<TVertex>, vertexCapacity: number = -1, edgeCapacity: number = -1) {
         this._vertexComparer = vertexComparer || new EqualityComparer();
         this._allowParallelEdges = allowParallelEdges;
         this._vertexInEdges = new VertexEdgeDictionary(vertexCapacity, this._vertexComparer);
@@ -205,12 +204,12 @@ export class BidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>>
     }
 
     public trimEdgeExcess(): void {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 
     public addEdge(edge: TEdge): boolean {
         if (!this.allowParallelEdges) {
-            if (this.containsVertexEdge(edge.source, edge.target)){
+            if (this.containsVertexEdge(edge.source, edge.target)) {
                 return false;
             }
         }
@@ -230,7 +229,7 @@ export class BidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>>
     public addEdgeRange(edges: TEdge[]): number {
         let count = 0;
         for (const edge of edges) {
-            if (this.addEdge(edge)){
+            if (this.addEdge(edge)) {
                 count++;
             }
         }
@@ -238,7 +237,7 @@ export class BidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>>
     }
 
     public removeEdge(edge: TEdge): boolean {
-        if (this._vertexOutEdges.get(edge.source)!.remove(edge)){
+        if (this._vertexOutEdges.get(edge.source)!.remove(edge)) {
             this._vertexInEdges.get(edge.target)!.remove(edge);
             this._edgeCount--;
             this.onEdgeRemoved(edge);
@@ -359,12 +358,12 @@ export class BidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>>
                 value: result.value!.values()
             }
         }
-        return {success: false};
+        return { success: false};
     }
 
     public tryGetVertexEdge(source: TVertex, target: TVertex): TryOutResult<TEdge> {
         const result = this._vertexOutEdges.tryGetValue(source);
-        if (result.success){
+        if (result.success) {
             for (const edge of result.value!.values()) {
                 if (this._vertexComparer.equals(edge.target, target)) {
                     return {
@@ -379,7 +378,7 @@ export class BidirectionalGraph<TVertex, TEdge extends IEdge<TVertex>>
 
     public tryGetVertexEdges(source: TVertex, target: TVertex): TryOutResult<IterableIterator<TEdge>> {
         const result = this._vertexOutEdges.tryGetValue(source);
-        if (result.success){
+        if (result.success) {
             const lst = new EdgeList<TVertex, TEdge>();
             for (const edge of result.value!.values()) {
                 if (this._vertexComparer.equals(edge.target, target)) {

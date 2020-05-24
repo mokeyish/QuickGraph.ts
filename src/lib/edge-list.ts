@@ -1,8 +1,8 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import {IEdge, IEdgeList} from "./interface";
-import { List } from "./list";
+import { IEdge, IEdgeList } from './interface';
+import { List } from './list';
 
 export class EdgeList<TVertex, TEdge extends IEdge<TVertex>>
     extends List<TEdge> implements IEdgeList<TVertex, TEdge>{
@@ -13,7 +13,7 @@ export class EdgeList<TVertex, TEdge extends IEdge<TVertex>>
             super()
         } else if (args instanceof Array) {
             super(...args);
-        } else if (args >= 0){
+        } else if (args >= 0) {
             super(args);
         } else {
             super()

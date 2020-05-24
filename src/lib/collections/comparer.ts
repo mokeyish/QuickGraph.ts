@@ -1,7 +1,7 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { IComparer } from "./interface";
+import { IComparer } from './interface';
 
 /**
  * Provides a base class for implementations of the generic interface

@@ -1,14 +1,14 @@
 /**
  * Created by yish on 2020/05/10.
  */
-import { IEdge, IVertexListGraph } from "../../interface";
-import { AlgorithmBase } from "../algorithm-base";
-import { DepthFirstSearchAlgorithm } from "../search/depth-first-search-algorithm";
-import { GraphColor } from "../../graph-color";
-import { Subscription } from "rxjs";
+import { IEdge, IVertexListGraph } from '../../interface';
+import { AlgorithmBase } from '../algorithm-base';
+import { DepthFirstSearchAlgorithm } from '../search/depth-first-search-algorithm';
+import { GraphColor } from '../../graph-color';
+import { Subscription } from 'rxjs';
 
 
-export class TopologicalSortAlgorithm<TVertex,TEdge extends IEdge<TVertex>>
+export class TopologicalSortAlgorithm<TVertex, TEdge extends IEdge<TVertex>>
     extends AlgorithmBase<IVertexListGraph<TVertex, TEdge>>{
     private vertices: TVertex[];
     public readonly allowCyclicGraph: boolean  = false;
@@ -32,13 +32,13 @@ export class TopologicalSortAlgorithm<TVertex,TEdge extends IEdge<TVertex>>
     }
 
     protected internalCompute() {
-        let dfs: DepthFirstSearchAlgorithm<TVertex, TEdge> = new DepthFirstSearchAlgorithm<TVertex, TEdge>(
+        const dfs: DepthFirstSearchAlgorithm<TVertex, TEdge> = new DepthFirstSearchAlgorithm<TVertex, TEdge>(
             this,
             this.visitedGraph,
             new Map<TVertex, GraphColor>()
         );
-        let backEdgeSubscription: Subscription = dfs.backEdge.subscribe(this.backEdge.bind(this));
-        let finishVertexSubscription: Subscription = dfs.finishVertex.subscribe(this.finishVertex.bind(this));
+        const backEdgeSubscription: Subscription = dfs.backEdge.subscribe(this.backEdge.bind(this));
+        const finishVertexSubscription: Subscription = dfs.finishVertex.subscribe(this.finishVertex.bind(this));
 
         try {
             dfs.compute();

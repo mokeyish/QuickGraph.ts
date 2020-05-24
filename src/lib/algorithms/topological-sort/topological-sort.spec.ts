@@ -2,9 +2,9 @@
  * Created by yish on 2020/05/10.
  */
 
-import { BidirectionalGraph } from "../../bidirectional-graph";
-import { Edge } from "../../edge";
-import { TopologicalSortAlgorithm } from "./topological-sort-algorithm";
+import { BidirectionalGraph } from '../../bidirectional-graph';
+import { Edge } from '../../edge';
+import { TopologicalSortAlgorithm } from './topological-sort-algorithm';
 import '../../ext';
 
 describe('TopologicalSort', () => {
@@ -26,6 +26,6 @@ describe('TopologicalSort', () => {
 
         const sortAlgorithm = new TopologicalSortAlgorithm(g);
         sortAlgorithm.compute();
-        expect(sortAlgorithm.sortedVertices).toEqual([e, a ,c ,b ,d]);
+        expect(sortAlgorithm.sortedVertices).toEqual([e, a , c , b , d]);
     })
 });

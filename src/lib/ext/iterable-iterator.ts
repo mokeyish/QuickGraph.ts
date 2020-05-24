@@ -15,10 +15,12 @@ declare interface IterableIterator<T> {
 
     takeWhile(predicate: (item: T, index: number) => boolean): IterableIterator<T>;
 
+    find(predicate: (item: T, index: number) => boolean): T | undefined;
+
     toArray(): T[];
 }
 
-const iterableIterator : IterableIterator<any> = {} as any;
+const iterableIterator : IterableIterator<any> = { } as any;
 iterableIterator.skip = function (count: number): IterableIterator<any> {
     while (count > 0) {
         const n = this.next();
@@ -70,6 +72,18 @@ iterableIterator.takeWhile = function(predicate: (item: any, index: number) => b
         i++;
     }
     return v.values();
+}
+
+iterableIterator.find = function(predicate: (item: any, index: number) => boolean): any | undefined {
+    let next = this.next();
+    let i = 0;
+    while (!next.done) {
+        next = this.next();
+        if (predicate(next.value, i)) {
+            return next.value;
+        }
+        i++;
+    }
 }
 
 iterableIterator.toArray = function (): any[] {
